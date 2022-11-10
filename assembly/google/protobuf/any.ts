@@ -3,16 +3,14 @@ import { Writer, Reader } from "as-proto";
 export namespace any {
   export class Any {
     static encode(message: Any, writer: Writer): void {
-      const field_type_url = message.type_url;
-      if (field_type_url !== null) {
+      if (message.type_url.length != 0) {
         writer.uint32(10);
-        writer.string(field_type_url);
+        writer.string(message.type_url);
       }
 
-      const field_value = message.value;
-      if (field_value !== null) {
+      if (message.value.length != 0) {
         writer.uint32(18);
-        writer.bytes(field_value);
+        writer.bytes(message.value);
       }
     }
 
@@ -40,10 +38,10 @@ export namespace any {
       return message;
     }
 
-    type_url: string | null;
-    value: Uint8Array | null;
+    type_url: string;
+    value: Uint8Array;
 
-    constructor(type_url: string | null = null, value: Uint8Array | null = null) {
+    constructor(type_url: string = "", value: Uint8Array = new Uint8Array(0)) {
       this.type_url = type_url;
       this.value = value;
     }
